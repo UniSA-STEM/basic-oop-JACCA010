@@ -7,10 +7,11 @@ Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 class Hacker:
-    def __init__(self):
-        self.__name = ""  # possible random name creation?
-        self.__inventory = ""  # get asset?
+    def __init__(self, name, rig, trace_level, inventory):
+        self._name = []  # possible random name creation?
+        self.__rig = []  # consider option to use hacker name?
         self.__trace_level = 0  # exposure level base line
+        self.__inventory = ""  # get asset?
 
     # action - rig acquisition
     # action - launch data spike
