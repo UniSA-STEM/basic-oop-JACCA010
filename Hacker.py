@@ -6,18 +6,21 @@ ID: 110481962
 Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
+import random
 class Hacker:
-
-    def __init__(self, name, rig, trace_level, inventory):
-        self._name = []  # possible random name creation?
-        self.__rig = []  # consider option to use hacker name?
-        self.__trace_level = 0  # exposure level baseline
-        self.__inventory = ""  # get asset?
+    def __init__(self, rig=None, trace_level="Undetected", inventory="CryptoToken"):
+        self.__name_list = ["NyxVortex", "Zara-9", "KaelStrider","EchoTalon","DriftSolari","VexOrion","NovaQuell","ThorneAxion","LumaReign","CipherVox"]
+        self.__name = random.choice(self.__name_list)
+        self.__rig = rig
+        self.__trace_level = trace_level
+        self.__inventory = inventory
 
     def __str__(self):  # string method added
-        output = f"{self._name}, {self.__rig}, {self.__trace_level}, {self.__inventory}"
+        output = f"Name: {self.__name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
         return output.strip()
 
+    def hacker_name(self):
+        return self.__name
 
     def acquire_rig (self):    # method to initiate rig for new hacker
         if self.__rig == None:
@@ -56,3 +59,8 @@ class Hacker:
 # action - encrypt assets
 # action - rig upgrade
 # action - store and retrieve assets /
+
+# Testing
+hacker = Hacker()
+print(hacker)
+
