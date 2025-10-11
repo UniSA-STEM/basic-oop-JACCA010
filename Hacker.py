@@ -6,11 +6,11 @@ ID: 110481962
 Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-import random
+
+
 class Hacker:
-    def __init__(self, rig=None, trace_level="Undetected", inventory="CryptoToken"):
-        self.__name_list = ["NyxVortex", "Zara-9", "KaelStrider","EchoTalon","DriftSolari","VexOrion","NovaQuell","ThorneAxion","LumaReign","CipherVox"]
-        self.__name = random.choice(self.__name_list)
+    def __init__(self, hacker_name, rig=None, trace_level="Undetected", inventory="CryptoToken"):
+        self.__hacker_name = hacker_name
         self.__rig = rig
         self.__trace_level = trace_level
         self.__inventory = inventory
@@ -20,6 +20,7 @@ class Hacker:
         return output.strip()
 
     def hacker_name(self):
+        hacker_name = input(f"What is your name?")
         return self.__name
 
     def acquire_rig (self):    # method to initiate rig for new hacker
@@ -60,7 +61,5 @@ class Hacker:
 # action - rig upgrade
 # action - store and retrieve assets /
 
-# Testing
-hacker = Hacker()
-print(hacker)
+
 
