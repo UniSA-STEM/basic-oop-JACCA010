@@ -30,10 +30,9 @@ class Hacker:
             asset.set_inventory(inventory)
             self.__inventory.remove(inventory)
 
-            input (f"You must first acquire a rig. A rig will cost you one CryptoToken. Do you want to proceed? (Y/N)")
+            self.__rig input (f"You must first acquire a rig. A rig will cost you one CryptoToken. Do you want to proceed? (Y/N)")
 
-            if input() == "Y":
-
+            if self.__rig == "Y":
                rig.set_rig_name(rig_name)
 
 
@@ -93,11 +92,29 @@ class Hacker:
 
         return self__hacker_actions
 
+    def reduce_trace_level(self, reduce_trace):
+        if self.__hacker_actions >=2 and self.hacker_actions !=4:
+            self.reduce_trace = input ("Your rig is at risk of being compromised. Further activity will affect your available actions."
+                                "Do you want to go underground to reduce your exposure? (Y/N)")
+                if reduce_trace == "Y":
+                    self.__hacker_actions -= 1
 
+                else:
+                    # return to action list with available actions
+        else:
+            self__hacker_action -= 3
+            self.reduce_trace = input ("Your rig is still at risk of being compromised. "
+                                       "Do you want to remain underground to reduce your exposure? (Y/N)")
+            for self.reduce_trace == "Y":
+                self.__hacker_actions -= 1
 
+            else:
+                output (f"Proceed at your own risk.")
+                    # return to action list with available actions
 # action - encrypt assets
 # action - rig upgrade
 # action - store and retrieve assets /
+
 
 
 
