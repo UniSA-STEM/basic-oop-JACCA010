@@ -9,33 +9,38 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 
 class Hacker:
-    def __init__(self, hacker_name, rig=None, trace_level="Undetected", inventory="CryptoToken"):
+    def __init__(self, hacker_name, rig, trace_level, inventory, hacker_actions):
         self.__hacker_name = hacker_name
         self.__rig = rig
-        self.__trace_level = trace_level
-        self.__inventory = inventory
+        self.__trace_level = trace_level ["undetected","level 1 - alert", "level 2 - high alert", "level 3 - detected"],
+        self.__inventory = inventory if inventory is not None else []
+        self.__hacker_actions = hacker_actions ["launch_data_spike""encrypt_assets","upgrade_rig","store_assets","retrieve_assets"]
 
     def __str__(self):  # string method added
-        output = f"Name: {self.__name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
+        output = f"Name: {self.__hacker_name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
         return output.strip()
 
     def hacker_name(self):
-        hacker_name = input(f"What is your name?")
-        return self.__name
+        self.__hacker_name = input(f"What is your name?")
+        return self.__hacker_name
 
-    def acquire_rig (self):    # method to initiate rig for new hacker
+    def acquire_rig (self, rig=None, rig_name=None, inventory = "CryptoToken" ):    # method to initiate rig for new hacker
         if self.__rig == None:
+            rig.set_rig_name = self.__hacker_name[0,1] + "R" + len(self.__hacker_name)
+            asset.set_inventory(inventory)
+            self.__inventory.remove(inventory)
+
             input (f"You must first acquire a rig. A rig will cost you one CryptoToken. Do you want to proceed? (Y/N)")
+
             if input() == "Y":
 
-                #    Add method to reduce CryptoToken by 1
+               rig.set_rig_name(rig_name)
 
-                print (f"Rig activated. Rig name {self.__rig} assigned.")
 
             else:
                 input (f"You must first acquire a rig. A rig will cost you one CryptoToken. Do you want to proceed? (Y/N)")
-        else:
-            return self.__rig
+
+        print(f"Rig activated. Rig name {rig_name} assigned.")  # add rig.set_rig_name method
 
     def launch_data_spike(self):
 
