@@ -12,7 +12,7 @@ class Hacker:
     def __init__(self, hacker_name, rig, trace_level, inventory, hacker_actions):
         self.__hacker_name = hacker_name
         self.__rig = rig
-        self.__trace_level = trace_level ["undetected","level 1 - alert", "level 2 - high alert", "level 3 - detected"],
+        self.__trace_level = trace_level ["undetected","level 1 - yellow alert", "level 2 - orange alert", "level 3 - red alert", "detected"],
         self.__inventory = inventory if inventory is not None else []
         self.__hacker_actions = hacker_actions ["launch_data_spike""encrypt_assets","upgrade_rig","store_assets","retrieve_assets"]
 
@@ -57,10 +57,43 @@ class Hacker:
 
         #    add method to return to activity screen
 
-
     def scan_inventory (self):    # show current inventory details for hacker
         output_inventory = f"{self.__inventory}"
         return output_inventory.strip()
+
+    def trace_level(self):
+        while self__hacker_actions == 0:
+            self.__trace_level = "undetected"
+
+        if self__hacker_actions == 1:
+            self.__trace_level = "level 1 - yellow alert"
+
+        elif self__hacker_actions == 2:
+            self.__trace_level = "level 2 - orange alert"
+
+        elif self__hacker_actions == 3:
+            self.__trace_level = "level 3 - red alert"
+
+        else:
+            self.__trace_level = "detected"
+
+        return self.__trace_level
+
+    def self__hacker_action (self):
+        self__hacker_actions +=1
+
+        while self__hacker_actions <=2:
+            # all hacker actions available
+
+        if self__hacker_actions ==3:
+            # only able to upgrade rig or encrypt assets:
+
+        if self__hacker_actions >=4:
+            output = f"{rig.rig_name(self)} has been compromised. You must go underground until your trace level has reduced."
+
+        return self__hacker_actions
+
+
 
 # action - encrypt assets
 # action - rig upgrade
