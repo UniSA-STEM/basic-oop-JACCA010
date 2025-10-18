@@ -9,7 +9,6 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 from asset import Asset
 
 class Rig:
-
     def __init__(self, rig_name, damage=0, rig_status="Online", rig_inventory=None, upgrade_level=0, max_damage=2):
         self.__rig_name = rig_name  #get hacker_name
         self.__damage = damage
