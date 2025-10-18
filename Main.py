@@ -23,6 +23,11 @@ def test_acquire_rig():
 def test_acquire_duplicate_rig():
     Hacker.acquire_rig()
 
+def test_no_data_spike():
+    Hacker.acquire_rig()
+
+def test_no_hardware_patch():
+    Hacker.rig_upgrade()
 
 if __name__ == '__Main__':
     test_hacker_create()

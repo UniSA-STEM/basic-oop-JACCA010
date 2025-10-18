@@ -41,7 +41,7 @@ class Hacker:
     def launch_data_spike(self, target_rig):
         spike = next((a for a in self.__inventory if a.name == "Data Spike"), None)
         if not spike:
-            print("You do not have a Data Spike available.")
+            print("You do not have a Data Spike available.\n")
             return
         self.__inventory.remove(spike)
         target_rig.take_damage()
@@ -115,15 +115,35 @@ class Hacker:
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
 
+    def rig_upgrade(self, asset_name = "Hardware Patch", amount=1):    # adding rig upgrade to Hacker class
+        if not self.__rig:
+            print(f"No rig assigned to {self.__hacker_name}. Unable to upgrade.")
+            return
+        asset_name = next((a for a in self.__inventory if a.name == "Hardware Patch"), None)
+        if not asset_name or asset_name.quantity < amount:
+            print(f"Upgrade failed: Hardware Patch not available.")
+            return
+        # applying upgrade to rig
+
+        self.__rig.upgrade(asset_name)
+        self.retrieve_asset("Hardware Patch", 1)
+
+
+
 # Create Hacker (no rig)
 
 Hacker = Hacker("DragonFire", None, 0,  None)
 print(Hacker)
 
 # Acquire Rig
-
 Hacker.acquire_rig()
 
 # Acquire Rig (already acquired)
 Hacker.acquire_rig()
-Hacker.acquire_rig()
+
+# No Data Spike available
+Hacker.launch_data_spike(target_rig=Hacker)
+
+# No Hardware Patch available
+Hacker.rig_upgrade()
+
