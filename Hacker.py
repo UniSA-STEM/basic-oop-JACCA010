@@ -14,26 +14,25 @@ class Hacker:
         self.__hacker_name = hacker_name
         self.__rig = rig
         self.__trace_level = trace_level  # list to be defined
-        self.__inventory = inventory if inventory is not None else [Asset("CryptoToken", "Used to acquire or repair rigs")]  # default 1 CryptoToken at start
+        self.__inventory = inventory if inventory is not None else "CryptoToken (1) - Used to acquire or repair rigs." # default 1 CryptoToken at start
         self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
         Rig.rig_status = str(self.__rig) if self.__rig else "No rig assigned"
         self.inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
         self.trace_description = self.get_trace_level_description()
-        output = f"Name: {self.__hacker_name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
+        output = f"Name: {self.__hacker_name}\nRig: {Rig.rig_status}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
+
         return output.strip()
 
-    def acquire_rig(self, rig=None, rig_name=None):
-        if "CryptoToken" in [asset.name for asset in self.__inventory]:
-            if rig_name is None:
-                rig.rig_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
-                self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
-                print(f"Rig activated. Rig name '{rig_name}' assigned.")
-            else:
-                print("Rig acquisition cancelled.")
-        else:
-            print("No CryptoToken available to acquire rig.")
+
+
+    def acquire_rig(self, Rig=None, Rig_name=None):
+        if Rig:
+            assigned_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
+            Rig.set_rig_name(assigned_name)
+            self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
+            print(f"Rig activated. Rig name '{assigned_name}' assigned.")
 
     def get_trace_level_description(self):
         levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]
@@ -115,4 +114,13 @@ class Hacker:
             asset.decrypt()
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
+
+# Create Hacker (no rig)
+
+Hacker = Hacker("DragonFire", None, 0,  None)
+print(Hacker)
+
+
+
+# Aquire Rig
 
