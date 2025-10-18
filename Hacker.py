@@ -123,3 +123,6 @@ class Hacker:
             asset.decrypt()
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
+
+import asset
+print(asset.Asset("Test", "Just testing"))
