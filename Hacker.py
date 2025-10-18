@@ -81,10 +81,8 @@ class Hacker:
 
     def reduce_trace_level(self):
         if self.__trace_level > 0:
-            confirm = input("Do you want to go underground to reduce your trace level? (Y/N): ")
-            if confirm.upper() == "Y":
-                self.__trace_level -= 1
-                print(f"Trace level reduced to: {self.get_trace_level_description()}")
+            self.__trace_level -= 1
+            print(f"Trace level reduced to: {self.get_trace_level_description()}")
         else:
             print("Proceed at your own risk.")
 
