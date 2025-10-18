@@ -18,9 +18,9 @@ class Hacker:
         self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
-        rig_status = str(self.__rig) if self.__rig else "No rig assigned"
-        inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
-        trace_description = self.get_trace_level_description()
+        rig.rig_status = str(self.__rig) if self.__rig else "No rig assigned"
+        self.inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
+        self.trace_description = self.get_trace_level_description()
         output = f"Name: {self.__hacker_name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
         return output.strip()
 
@@ -29,9 +29,9 @@ class Hacker:
             confirm = input("Acquiring a rig costs one CryptoToken. Proceed? (Y/N): ")
             if confirm.upper() == "Y":
                 if rig_name is None:
-                    self.__rig_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
-                self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
-                print(f"Rig activated. Rig name '{rig_name}' assigned.")
+                    rig.rig_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
+                    self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
+                    print(f"Rig activated. Rig name '{rig_name}' assigned.")
             else:
                 print("Rig acquisition cancelled.")
         else:
@@ -59,16 +59,16 @@ class Hacker:
         return "\n".join(str(asset) for asset in self.__inventory) or "Inventory is empty."
 
     def trace_level(self):
-        while self__hacker_actions == 0:
+        while self.__actions == 0:
             self.__trace_level = "undetected"
 
-        if self__hacker_actions == 1:
+        if self.__actions == 1:
             self.__trace_level = "level 1 - yellow alert"
 
-        elif self__hacker_actions == 2:
+        elif self.__actions == 2:
             self.__trace_level = "level 2 - orange alert"
 
-        elif self__hacker_actions == 3:
+        elif self.__actions == 3:
             self.__trace_level = "level 3 - red alert"
 
         else:
