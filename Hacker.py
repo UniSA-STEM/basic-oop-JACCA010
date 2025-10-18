@@ -27,12 +27,12 @@ class Hacker:
 
     def acquire_rig(self):
         if self.__rig:
-           print(f"Rig acquisition failed: {self.__hacker_name} already has an active rig ({self.__rig}).")    # prevent duplication of rig
+           print(f"Rig acquisition failed: {self.__hacker_name} already has an active rig.\n{self.__rig}.\n")    # prevent duplication of rig
            return
         assigned_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
         self.__rig = Rig(assigned_name)    # assigns rig to Hacker
         self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
-        print(f"Rig activated. Rig name '{assigned_name}' assigned.")
+        print(f"Rig activated. Rig name '{assigned_name}' assigned.\n")
 
     def get_trace_level_description(self):
         levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]

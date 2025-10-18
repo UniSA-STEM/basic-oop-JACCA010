@@ -17,8 +17,12 @@ def test_hacker_create():
     hacker = Hacker ("DragonFire", None, 0, None)
     print(hacker)
 
-def test_aquire_rig():
+def test_acquire_rig():
     Hacker.acquire_rig()
+
+def test_acquire_duplicate_rig():
+    Hacker.acquire_rig()
+
 
 if __name__ == '__Main__':
     test_hacker_create()
