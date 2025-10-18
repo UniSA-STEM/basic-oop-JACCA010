@@ -6,60 +6,57 @@ ID: 110481962
 Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
+from asset import Asset
+from rig import Rig
 
 class Hacker:
-    def __init__(self, hacker_name, rig=None, trace_level=0, inventory=None, actions):
+    def __init__(self, hacker_name, rig=None, trace_level=0, inventory=None, actions=0):
         self.__hacker_name = hacker_name
         self.__rig = rig
         self.__trace_level = trace_level  # list to be defined
-        self.__inventory = inventory if inventory is not None else []
-        self.__actions = actions # actions to be defined
+        self.__inventory = inventory if inventory is not None else [Asset("CryptoToken", "Used to acquire or repair rigs")]  # default 1 CryptoToken at start
+        self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
-        rig_status = self.__rig if self.__rig else "No rig assigned"
-        inventory_list = "\n ".join(str(asset) for asset in self.__inventory)
+        rig_status = str(self.__rig) if self.__rig else "No rig assigned"
+        inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
+        trace_description = self.get_trace_level_description()
         output = f"Name: {self.__hacker_name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
         return output.strip()
 
-    def hacker_name(self):
-        self.__hacker_name = input(f"What is your name?")
-        return self.__hacker_name
-
-    def acquire_rig (self, rig=None, rig_name=None, inventory = "CryptoToken" ):    # method to initiate rig for new hacker
-        if self.__rig == None:
-            rig.set_rig_name = self.__hacker_name[0,1] + "R" + len(self.__hacker_name)
-            asset.set_inventory(inventory)
-            self.__inventory.remove(inventory)
-
-            self.__rig input (f"You must first acquire a rig. A rig will cost you one CryptoToken. Do you want to proceed? (Y/N)")
-
-            if self.__rig == "Y":
-               rig.set_rig_name(rig_name)
-
-
+    def acquire_rig(self, rig=None, rig_name=None):
+        if "CryptoToken" in [asset.name for asset in self.__inventory]:
+            confirm = input("Acquiring a rig costs one CryptoToken. Proceed? (Y/N): ")
+            if confirm.upper() == "Y":
+                if rig_name is None:
+                    self.__rig_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
+                self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
+                print(f"Rig activated. Rig name '{rig_name}' assigned.")
             else:
-                input (f"You must first acquire a rig. A rig will cost you one CryptoToken. Do you want to proceed? (Y/N)")
-
-        print(f"Rig activated. Rig name {rig_name} assigned.")  # add rig.set_rig_name method
-
-    def launch_data_spike(self):
-
-        target_rig = ()    # need to define target_rig
-        target_rig_damage = ()    # get rig info on target rig
-        data_spike = 1     #    add method to check inventory for number of data spikes
-
-        if data_spike == 0:
-            print (f"You do not have sufficient data spikes available.")
-
+                print("Rig acquisition cancelled.")
         else:
-            data_spike -= 1
-            target_rig_damage += 1    #target_rig_damage to be defined
+            print("No CryptoToken available to acquire rig.")
 
-        #    add method to return to activity screen
+    def get_trace_level_description(self):
+        levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]
+        return levels[min(self.__trace_level, len(levels)) - 1]
+
+
+
+
+    def launch_data_spike(self, target_rig):
+        spike = next((a for a in self.__inventory if a.name == "Data Spike"), None)
+        if not spike:
+            print("You do not have a Data Spike available.")
+            return
+        self.__inventory.remove(spike)
+        target_rig.take_damage()
+        self.__actions += 1
+        self.__trace_level += 1
+        print(f"Data Spike launched. Trace level now: {self.get_trace_level_description()}")
 
     def scan_inventory (self):    # show current inventory details for hacker
-        output_inventory = f"{self.__inventory}"
-        return output_inventory.strip()
+        return "\n".join(str(asset) for asset in self.__inventory) or "Inventory is empty."
 
     def trace_level(self):
         while self__hacker_actions == 0:
@@ -79,36 +76,50 @@ class Hacker:
 
         return self.__trace_level
 
-    def self__hacker_action (self):
-        self__hacker_actions +=1
+    def perform_action(self, action_name):
+        self.__actions += 1
+        self.__trace_level += 1
+        print(f"Action '{action_name}' performed. Trace level: {self.get_trace_level_description()}")
 
-        while self__hacker_actions <=2:
-            # all hacker actions available
+        if self.__trace_level >= 4:
+            print(f"{self.__rig.get_rig_name()} has been compromised. You must go underground to reduce exposure.")
 
-        if self__hacker_actions ==3:
-            # only able to upgrade rig or encrypt assets:
-
-        if self__hacker_actions >=4:
-            output = f"{rig.rig_name(self)} has been compromised. You must go underground until your trace level has reduced."
-
-        return self__hacker_actions
-
-    def reduce_trace_level(self, reduce_trace):
-        if self.__hacker_actions >=2 and self.hacker_actions !=4:
-            self.reduce_trace = input ("Your rig is at risk of being compromised. Further activity will affect your available actions."
-                                "Do you want to go underground to reduce your exposure? (Y/N)")
-                if reduce_trace == "Y":
-                    self.__hacker_actions -= 1
-
-                else:
-                    # return to action list with available actions
+    def reduce_trace_level(self):
+        if self.__trace_level > 0:
+            confirm = input("Do you want to go underground to reduce your trace level? (Y/N): ")
+            if confirm.upper() == "Y":
+                self.__trace_level -= 1
+                print(f"Trace level reduced to: {self.get_trace_level_description()}")
         else:
-            self__hacker_action -= 3
-            self.reduce_trace = input ("Your rig is still at risk of being compromised. "
-                                       "Do you want to remain underground to reduce your exposure? (Y/N)")
-            for self.reduce_trace == "Y":
-                self.__hacker_actions -= 1
+            print("Proceed at your own risk.")
 
-            else:
-                output (f"Proceed at your own risk.")
-                    # return to action list with available actions
+    def store_asset(self, asset_name):
+        asset = next((a for a in self.__inventory if a.name == asset_name), None)
+        if asset and self.__rig:
+            self.__rig.store_asset(asset)
+            self.__inventory.remove(asset)
+        else:
+            print(f"Rig upgrade required, cannot store asset '{asset_name}")
+
+
+    def retrieve_asset(self, asset_name):
+        if self.__rig:
+            asset = self.__rig.release_asset(asset_name)
+            if asset:
+                self.__inventory.append(asset)
+        else:
+            print("Asset not found in inventory.")
+
+    def encrypt_asset(self, asset_name):
+        asset = next((a for a in self.__inventory if a.name == asset_name), None)
+        if asset:
+            asset.encrypt()
+        else:
+            print(f"Asset '{asset_name}' not found in inventory.")
+
+    def decrypt_asset(self, asset_name):
+        asset = next((a for a in self.__inventory if a.name == asset_name), None)
+        if asset:
+            asset.decrypt()
+        else:
+            print(f"Asset '{asset_name}' not found in inventory.")
