@@ -6,8 +6,7 @@ ID: 110481962
 Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-from _ast import Pass
-
+from asset import Asset
 
 class Rig:
 
@@ -21,7 +20,7 @@ class Rig:
 
     def __str__(self):
         inventory_list = "\n  ".join(str(asset) for asset in self.__rig_inventory) or "Empty"
-        return (f"Rig Name: {self.__rig_name}\nStatus: {self.__rig_status}\nDamage: {self.__damage}/{self.__max_damage}\nUpgrade Level: {self.__upgrade_level}\nInventory:\n{inventory_list}")
+        return f"Rig Name: {self.__rig_name}\nStatus: {self.__rig_status}\nDamage: {self.__damage}/{self.__max_damage}\nUpgrade Level: {self.__upgrade_level}\nInventory:\n{inventory_list}"
 
 
     def get_rig_name(self):
