@@ -6,8 +6,8 @@ ID: 110481962
 Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-from asset import Asset
-from rig import Rig
+from Asset import Asset
+from Rig import Rig
 
 class Hacker:
     def __init__(self, hacker_name, rig=None, trace_level=0, inventory=None, actions=0):
@@ -18,7 +18,7 @@ class Hacker:
         self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
-        rig.rig_status = str(self.__rig) if self.__rig else "No rig assigned"
+        Rig.rig_status = str(self.__rig) if self.__rig else "No rig assigned"
         self.inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
         self.trace_description = self.get_trace_level_description()
         output = f"Name: {self.__hacker_name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
@@ -124,5 +124,3 @@ class Hacker:
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
 
-import asset
-print(asset.Asset("Test", "Just testing"))
