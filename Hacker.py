@@ -14,25 +14,21 @@ class Hacker:
         self.__hacker_name = hacker_name
         self.__rig = rig
         self.__trace_level = trace_level  # list to be defined
-        self.__inventory = inventory if inventory is not None else "CryptoToken (1) - Used to acquire or repair rigs." # default 1 CryptoToken at start
+        self.__inventory = inventory if inventory is not None else [Asset("CryptoToken", "Used to acquire or repair rigs.", "Unencrypted", 1)] # default 1 CryptoToken at start
         self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
         Rig.rig_status = str(self.__rig) if self.__rig else "No rig assigned"
         self.inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
         self.trace_description = self.get_trace_level_description()
-        output = f"Name: {self.__hacker_name}\nRig: {Rig.rig_status}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
+        output = f"Name: {self.__hacker_name}\nRig: {Rig.rig_status}\nTrace Level: {self.__trace_level}\nAssets: \n{self.inventory_list}"
 
         return output.strip()
 
-
-
-    def acquire_rig(self, Rig=None, Rig_name=None):
-        if Rig:
-            assigned_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
-            Rig.set_rig_name(assigned_name)
-            self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
-            print(f"Rig activated. Rig name '{assigned_name}' assigned.")
+    def acquire_rig(self):
+        assigned_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
+        self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
+        print(f"Rig activated. Rig name '{assigned_name}' assigned.")
 
     def get_trace_level_description(self):
         levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]
@@ -50,7 +46,7 @@ class Hacker:
         print(f"Data Spike launched. Trace level now: {self.get_trace_level_description()}")
 
     def scan_inventory (self):    # show current inventory details for hacker
-        return "\n".join(str(asset) for asset in self.__inventory) or "Inventory is empty."
+        return "\n".join(Asset.display_asset() for Asset in self.__inventory) or "Inventory is empty."
 
     def trace_level(self):
         while self.__actions == 0:
@@ -120,7 +116,6 @@ class Hacker:
 Hacker = Hacker("DragonFire", None, 0,  None)
 print(Hacker)
 
+# Acquire Rig
 
-
-# Aquire Rig
-
+Hacker.acquire_rig()
