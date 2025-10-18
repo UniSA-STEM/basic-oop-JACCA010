@@ -10,3 +10,4 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 # import classes
 # simulate battles, upgrades, encryption and trace management
 # manage test cases to verify program
+# add general activities to return to main screen

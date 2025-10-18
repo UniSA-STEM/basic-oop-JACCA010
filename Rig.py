@@ -8,13 +8,21 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
 class Rig:
-    def __init__(self):
-        self.__rig_name = ""    # Linked to hacker name?
-        self.__damage = 0
-        self.__condition = ""    # Based on damage level
-        self.__storage = ""    # Rig inventory with default inclusions
-        self.__upgrade_level = 0    # default level
-        self.__max_damage = 2
+
+    def __init__(self, rig_name, damage, rig_status, rig_inventory, upgrade_level, max_damage=2):
+        self.__rig_name = rig_name  #get hacker_name
+        self.__damage = damage
+        self.__rig_status = rig_status
+        self.__rig_inventory = rig_inventory
+        self.__upgrade_level = upgrade_level  #default 0
+        self.__max_damage = max_damage  #max_damage 2 before rig status = critical damage - rig offline
+
+    def set_rig_name(self):
+        return self.__rig_name
+
+
+
+
 
     # repair action to be added
     # upgrade action to be added

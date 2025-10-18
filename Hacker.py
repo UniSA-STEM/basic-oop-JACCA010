@@ -7,16 +7,17 @@ Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
-
 class Hacker:
-    def __init__(self, hacker_name, rig, trace_level, inventory, hacker_actions):
+    def __init__(self, hacker_name, rig=None, trace_level=0, inventory=None, actions):
         self.__hacker_name = hacker_name
         self.__rig = rig
-        self.__trace_level = trace_level ["undetected","level 1 - yellow alert", "level 2 - orange alert", "level 3 - red alert", "detected"],
+        self.__trace_level = trace_level  # list to be defined
         self.__inventory = inventory if inventory is not None else []
-        self.__hacker_actions = hacker_actions ["launch_data_spike""encrypt_assets","upgrade_rig","store_assets","retrieve_assets"]
+        self.__actions = actions # actions to be defined
 
     def __str__(self):  # string method added
+        rig_status = self.__rig if self.__rig else "No rig assigned"
+        inventory_list = "\n ".join(str(asset) for asset in self.__inventory)
         output = f"Name: {self.__hacker_name}\nRig: {self.__rig}\nTrace Level: {self.__trace_level}\nAssets: {self.__inventory}"
         return output.strip()
 
@@ -111,10 +112,3 @@ class Hacker:
             else:
                 output (f"Proceed at your own risk.")
                     # return to action list with available actions
-# action - encrypt assets
-# action - rig upgrade
-# action - store and retrieve assets /
-
-
-
-
