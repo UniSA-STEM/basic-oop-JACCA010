@@ -32,7 +32,7 @@ class Rig:
     def get_upgrade_level(self):
         return self.__upgrade_level
 
-    def set_rig_name(self,name):
+    def set_rig_name(self, name):
         self.__rig_name = name
 
     def take_damage(self, amount=1):
