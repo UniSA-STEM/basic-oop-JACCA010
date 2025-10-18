@@ -26,7 +26,11 @@ class Hacker:
         return output.strip()
 
     def acquire_rig(self):
+        if self.__rig:
+           print(f"Rig acquisition failed: {self.__hacker_name} already has an active rig ({self.__rig}).")    # prevent duplication of rig
+           return
         assigned_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
+        self.__rig = Rig(assigned_name)    # assigns rig to Hacker
         self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
         print(f"Rig activated. Rig name '{assigned_name}' assigned.")
 
@@ -118,4 +122,8 @@ print(Hacker)
 
 # Acquire Rig
 
+Hacker.acquire_rig()
+
+# Acquire Rig (already acquired)
+Hacker.acquire_rig()
 Hacker.acquire_rig()
