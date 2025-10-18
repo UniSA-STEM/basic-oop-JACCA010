@@ -8,12 +8,11 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
 class Asset:
-    def __init__(self):
-        self.__asset_name:  ["CryptoToken", "Data Spike", "Removable Drive", "Security Chip", "Hardware Patch"]
-        self.__asset_description: []    # list of lists?
-        self.__attribute:  "Unencrypted"    # default setting
-        self.__inventory_type: ""    # hacker or rig inventory
+    def __init__(self, name, description, encrypted=False):
+        self.__name:  name
+        self.__description: description
+        self.__encrypted:  encrypted
 
-    # asset descriptions as per COMP1048 instructions
-    # actions to be created to move between hacker and rig inventory lists
-    # actions to be created to add or delete certain assets based on utilisation
+    def __str__(self):
+        status = "Encrypted" if self.encrypted else ""
+        return f"{self.name}: {self.description} {status}"
