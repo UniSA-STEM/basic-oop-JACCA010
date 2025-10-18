@@ -7,7 +7,18 @@ Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
-# import classes
-# simulate battles, upgrades, encryption and trace management
-# manage test cases to verify program
-# add general activities to return to main screen
+from Hacker import Hacker
+from Rig import Rig
+from Asset import Asset
+
+# Initiate test cases
+
+def test_hacker_create():
+    hacker = Hacker ("DragonFire", None, 0, None)
+    print(hacker)
+
+if __name__ == '__Main__':
+    test_hacker_create()
+
+
+
