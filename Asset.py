@@ -9,10 +9,26 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 class Asset:
     def __init__(self, name, description, encrypted=False):
-        self.__name:  name
-        self.__description: description
-        self.__encrypted:  encrypted
+        self.__name = name
+        self.__description = description
+        self.__encrypted = encrypted
 
     def __str__(self):
         status = "Encrypted" if self.encrypted else ""
         return f"{self.name}: {self.description} {status}"
+
+    def get_name(self):
+        return self.__name
+
+    def description(self):
+        return self.__description
+
+    def get_encrypted(self):
+        return self.__encrypted
+
+    # properties to be added
+    name = property(get_name)
+    description = property(description)
+    encrypted = property(get_encrypted)
+
+
