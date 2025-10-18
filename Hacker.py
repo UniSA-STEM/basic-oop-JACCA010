@@ -26,12 +26,10 @@ class Hacker:
 
     def acquire_rig(self, rig=None, rig_name=None):
         if "CryptoToken" in [asset.name for asset in self.__inventory]:
-            confirm = input("Acquiring a rig costs one CryptoToken. Proceed? (Y/N): ")
-            if confirm.upper() == "Y":
-                if rig_name is None:
-                    rig.rig_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
-                    self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
-                    print(f"Rig activated. Rig name '{rig_name}' assigned.")
+            if rig_name is None:
+                rig.rig_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
+                self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
+                print(f"Rig activated. Rig name '{rig_name}' assigned.")
             else:
                 print("Rig acquisition cancelled.")
         else:
@@ -40,9 +38,6 @@ class Hacker:
     def get_trace_level_description(self):
         levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]
         return levels[min(self.__trace_level, len(levels)) - 1]
-
-
-
 
     def launch_data_spike(self, target_rig):
         spike = next((a for a in self.__inventory if a.name == "Data Spike"), None)
@@ -100,7 +95,6 @@ class Hacker:
             self.__inventory.remove(asset)
         else:
             print(f"Rig upgrade required, cannot store asset '{asset_name}")
-
 
     def retrieve_asset(self, asset_name):
         if self.__rig:
