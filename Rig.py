@@ -7,7 +7,19 @@ Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
+import random    # to support random asset generation
+from Asset import Asset
+
 class Rig:
+
+    asset_list = {
+        "CryptoToken": "Used to acquire or repair rigs.",
+        "Data Spike": "Used in battles.",
+        "Removable Drive": "Found in rigs and used for extraction.",
+        "Security Chip": "Used to encrypt or decrypt assets.",
+        "Hardware Patch": "Used to upgrade rigs.",
+    }
+
     def __init__(self, rig_name, damage=0, rig_status="Online", rig_inventory=None, upgrade_level=0, max_damage=2):
         self.__rig_name = rig_name  #get hacker_name
         self.__damage = damage
@@ -68,5 +80,28 @@ class Rig:
                 return asset
         print(f"Asset '{asset_name}' not found in {self.__rig_name}.")
         return None
+
+    def random_asset(self):
+        name, description = random.choice(list(self.asset_list.items()))
+        return Asset(name, description, False, quantity=1)
+
+    def generate_asset(self, hacker):
+        rig_asset = {"Data Spike", "Removable Drive"}
+        hacker_asset = {"CryptoToken","Hardware Patch"}
+
+        asset = self.random_asset()
+
+        if asset.name in rig_asset:
+            self.__rig_inventory.append(asset)
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) added to inventory.\n")
+
+        elif asset.name in hacker_asset:
+            hacker.store_asset(asset)
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) added to inventory.\n")
+        else:
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
+            hacker.store_asset(asset)
+
+
 
 

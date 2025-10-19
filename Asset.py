@@ -7,15 +7,8 @@ Username: JACCA010
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
-class Asset:
 
-    asset_list = {
-        "CryptoToken": "Used to acquire or repair rigs.",
-        "Data Spike": "Used in battles.",
-        "Removable Drive": "Found in rigs and used for extraction.",
-        "Security Chip": "Used to encrypt or decrypt assets.",
-        "Hardware Patch": "Used to upgrade rigs.",
-    }
+class Asset:
 
     def __init__(self, name, description, encrypted=False, quantity=0):
         self.__name = name
@@ -53,6 +46,7 @@ class Asset:
     def display_asset(self):
         status = "Encrypted" if self.encrypted else "Unencrypted"
         return f"{self.name} ({self.quantity}) — {self.description} [{status}]"
+
 
 
 

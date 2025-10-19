@@ -18,19 +18,34 @@ def test_hacker_create():
     print(hacker)
 
 def test_acquire_rig():
+    hacker = Hacker("DragonFire", None, 0, None)
     Hacker.acquire_rig()
+    print(hacker)
 
 def test_acquire_duplicate_rig():
+    hacker = Hacker("DragonFire", None, 0, None)
     Hacker.acquire_rig()
+    Hacker.acquire_rig()
+    print(hacker)
 
 def test_no_data_spike():
+    hacker = Hacker("DragonFire", None, 0, None)
     Hacker.acquire_rig()
+    Hacker.launch_data_spike()
+    print(hacker)
 
 def test_no_hardware_patch():
+    hacker = Hacker("DragonFire", None, 0, None)
+    Hacker.acquire_rig()
     Hacker.rig_upgrade()
+    print(hacker)
+
+def test_generate_asset():
+    hacker = Hacker("DragonFire", None, 0, None)
+    Hacker.acquire_rig()
+    Rig.generate_asset(Hacker)
+    print(hacker)
+
 
 if __name__ == '__Main__':
     test_hacker_create()
-
-
-
