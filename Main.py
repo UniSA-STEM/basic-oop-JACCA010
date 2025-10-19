@@ -30,8 +30,9 @@ def test_acquire_duplicate_rig():
 
 def test_no_data_spike():
     hacker = Hacker("DragonFire", None, 0, None)
+    target_rig = Rig("TargetRig", 0, "Online", None)
     hacker.acquire_rig()
-    hacker.launch_data_spike()
+    hacker.launch_data_spike(target_rig=target_rig)
     print(hacker)
 
 def test_no_hardware_patch():
@@ -146,3 +147,19 @@ def test_repair_rig():
     print(target_hacker)
     target_rig.repair()
     print(target_hacker)
+
+if __name__ == "__main__":
+    test_hacker_create()
+    test_acquire_rig()
+    test_acquire_duplicate_rig()
+    test_no_data_spike()
+    test_no_hardware_patch()
+    test_asset_generation()
+    test_multiple_asset_generation()
+    test_rig_upgrade()
+    test_trace_level()
+    test_encryption_decryption_base_trace()
+    test_encryption_decryption_trace_2()
+    test_upgrade_high_trace()
+    test_damage_rig()
+    test_repair_rig()
