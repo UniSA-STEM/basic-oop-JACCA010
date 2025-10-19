@@ -40,18 +40,13 @@ def test_no_hardware_patch():
     hacker.rig_upgrade()
     print(hacker)
 
-def test_generate_asset():
-    hacker = Hacker("DragonFire", None, 0, None)    # No rig yet
+def test_asset_generation():
+    hacker = Hacker("StarBlaze", None, 0,  None)
     hacker.acquire_rig()    # Acquire Rig
+    rig = hacker.get_rig()
 
-    rig = hacker.get_rig()    # Access rig instance
+    rig.generate_asset(hacker)
 
-    rig.generate_asset(hacker)    # Initiate random asset generation
-
-    print("Hacker Inventory:")
     print(hacker.scan_inventory())
-
-    print("\nRig Inventory:")
-    print(rig.scan_inventory())
 
 
