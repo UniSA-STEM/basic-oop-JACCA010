@@ -95,6 +95,7 @@ class Rig:
         elif asset.name in hacker_asset:
             hacker.store_asset(asset)
             print(f"Generated asset: {asset.name} ({asset.encrypted}) added to inventory.\n")
+
         else:
             hacker.store_asset(asset)
             print(f"Generated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")

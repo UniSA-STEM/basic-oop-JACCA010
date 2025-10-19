@@ -49,8 +49,25 @@ class Hacker:
         self.__trace_level += 1
         print(f"Data Spike launched. Trace level now: {self.get_trace_level_description()}")
 
-    def scan_inventory (self):    # show current inventory details for hacker
-        return "\n".join(Asset.display_asset() for Asset in self.__inventory) or "Inventory is empty."
+    def scan_inventory (self):    # updated to include rig inventory
+        output = []
+        output.append("Hacker Inventory:")
+        if self.__inventory:
+            output.extend(f"{asset.display_asset()}" for asset in self.__inventory)
+        else:
+            output.append("Empty.\n")
+
+        output.append("Rig Inventory:")
+        if self.__rig and hasattr(self.__rig, "_Rig__rig_inventory"):
+            rig_inventory = self.__rig._Rig__rig_inventory
+            if rig_inventory:
+                output.extend([f" {asset.display_asset()}" for asset in rig_inventory])
+            else:
+                output.append("Empty.\n")
+        else:
+            output.append(" (No rig assigned)")
+
+        return "\n".join(output)
 
     def trace_level(self):
         while self.__actions == 0:
@@ -121,30 +138,37 @@ class Hacker:
             return
         asset_name = next((a for a in self.__inventory if a.name == "Hardware Patch"), None)
         if not asset_name or asset_name.quantity < amount:
-            print(f"Upgrade failed: Hardware Patch not available.")
+            print(f"Upgrade failed: Hardware Patch not available.\n")
             return
         # applying upgrade to rig
 
         self.__rig.upgrade(asset_name)
         self.retrieve_asset("Hardware Patch", 1)
 
+    def get_rig(self):
+        return self.__rig
 
 
 # Create Hacker (no rig)
 
-Hacker = Hacker("DragonFire", None, 0,  None)
-print(Hacker)
+hacker = Hacker("DragonFire", None, 0,  None)
+print(hacker)
 
 # Acquire Rig
-Hacker.acquire_rig()
+hacker.acquire_rig()
 
 # Acquire Rig (already acquired)
-Hacker.acquire_rig()
+hacker.acquire_rig()
 
 # No Data Spike available
-Hacker.launch_data_spike(target_rig=Hacker)
+hacker.launch_data_spike(target_rig=hacker)
 
 # No Hardware Patch available
-Hacker.rig_upgrade()
+hacker.rig_upgrade()
 
+# Testing asset generation
+hacker = Hacker("StarBlaze", None, 0,  None)
+hacker.acquire_rig()    # Acquire Rig
 
+print("Inventory:")
+print(hacker.scan_inventory())

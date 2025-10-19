@@ -19,37 +19,39 @@ def test_hacker_create():
 
 def test_acquire_rig():
     hacker = Hacker("DragonFire", None, 0, None)
-    Hacker.acquire_rig()
+    hacker.acquire_rig()
     print(hacker)
 
 def test_acquire_duplicate_rig():
     hacker = Hacker("DragonFire", None, 0, None)
-    Hacker.acquire_rig()
-    Hacker.acquire_rig()
+    hacker.acquire_rig()
+    hacker.acquire_rig()
     print(hacker)
 
 def test_no_data_spike():
     hacker = Hacker("DragonFire", None, 0, None)
-    Hacker.acquire_rig()
-    Hacker.launch_data_spike()
+    hacker.acquire_rig()
+    hacker.launch_data_spike()
     print(hacker)
 
 def test_no_hardware_patch():
     hacker = Hacker("DragonFire", None, 0, None)
-    Hacker.acquire_rig()
-    Hacker.rig_upgrade()
+    hacker.acquire_rig()
+    hacker.rig_upgrade()
     print(hacker)
 
 def test_generate_asset():
-    hacker = Hacker("DragonFire", None, 0, None)
-    Hacker.acquire_rig()
-    Rig.generate_asset(Hacker)
-    print(hacker)
+    hacker = Hacker("DragonFire", None, 0, None)    # No rig yet
+    hacker.acquire_rig()    # Acquire Rig
 
-if __name__ == '__Main__':
-    test_hacker_create()
-    test_acquire_rig()
-    test_acquire_duplicate_rig()
-    test_no_data_spike()
-    test_no_hardware_patch()
-    test_generate_asset()
+    rig = hacker.get_rig()    # Access rig instance
+
+    rig.generate_asset(hacker)    # Initiate random asset generation
+
+    print("Hacker Inventory:")
+    print(hacker.scan_inventory())
+
+    print("\nRig Inventory:")
+    print(rig.scan_inventory())
+
+
