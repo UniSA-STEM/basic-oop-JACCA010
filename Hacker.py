@@ -86,8 +86,6 @@ class Hacker:
 
         return "\n".join(output)
 
-
-
     def perform_action(self, action_name):
         self.__actions += 1
         self.__trace_level += 1
@@ -99,9 +97,9 @@ class Hacker:
     def reduce_trace_level(self):
         if self.__trace_level > 0:
             self.__trace_level -= 1
-            print(f"Trace level reduced to: {self.get_trace_level_description()}")
+            print(f"Trace level reduced to: {self.get_trace_level_description()}\n")
         else:
-            print("Proceed at your own risk.")
+            print("Proceed at your own risk.\n")
 
     def store_asset(self, new_asset):
         for asset in self.__inventory:
@@ -185,31 +183,21 @@ class Hacker:
             print(f"Upgrade failed: Hardware Patch not available.\n")
             return
 
-        upgrade.quantity -= 1
-        if upgrade.quantity == 0:
-            self.__inventory.remove(upgrade)
-        self.__rig.upgrade()
+        if self.__trace_level < 2:
+            upgrade.quantity -= 1
+            if upgrade.quantity == 0:
+                self.__inventory.remove(upgrade)
+            self.__rig.upgrade()
+        else:
+            print(f"You cannot perform that action until your trace level has reduced.\n")
 
 
-
-# test asset encryption and decryption (higher trace level as base)
+# test restriction on action with higher trace level
 
 hacker = Hacker("CraterMoon", None, 4, None)
 hacker.acquire_rig()
 rig = hacker.get_rig()
 rig.generate_asset(hacker)
 rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-print(hacker.scan_inventory())
-hacker.encrypt_asset("Data Spike")
-print(hacker.scan_inventory())
 hacker.rig_upgrade()
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-print(hacker.scan_inventory())
-hacker.decrypt_asset("Hardware Patch")
-print(hacker)
-print(hacker.scan_inventory())
-
-
 

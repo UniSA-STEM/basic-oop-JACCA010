@@ -115,4 +115,10 @@ def test_encryption_decryption_trace_2():
     print(hacker)
     print(hacker.scan_inventory())
 
-
+def test_upgrade_high_trace():
+    hacker = Hacker("CraterMoon", None, 4, None)
+    hacker.acquire_rig()
+    rig = hacker.get_rig()
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    hacker.rig_upgrade()
