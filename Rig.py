@@ -64,7 +64,7 @@ class Rig:
 
     def repair(self):
         if self.__damage >0:
-            self.__damage -= 1
+            self.__damage = 0    # full reset
             self.__rig_status = "Online" if self.__damage == 0 else "Damaged"
             print (f"{self.__rig_name} repaired.\nDamage: {self.__damage}")
         else:
