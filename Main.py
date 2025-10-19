@@ -122,3 +122,14 @@ def test_upgrade_high_trace():
     rig.generate_asset(hacker)
     rig.generate_asset(hacker)
     hacker.rig_upgrade()
+
+def damage_rig():
+    enemy_rig = Rig("Midnite")
+    enemy_hacker = Hacker("RedRose", enemy_rig, 0, None)
+    target_rig = Rig("DragonFire", 2, "Online", None)
+    target_hacker = Hacker("BlueDragon", target_rig, 0, None)
+    enemy_rig.generate_asset(enemy_hacker)
+    enemy_rig.generate_asset(enemy_hacker)
+    enemy_rig.generate_asset(enemy_hacker)
+    enemy_hacker.launch_data_spike(target_rig=target_rig)
+    print(target_hacker)
