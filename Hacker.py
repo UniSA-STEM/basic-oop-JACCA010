@@ -13,15 +13,15 @@ class Hacker:
     def __init__(self, hacker_name, rig=None, trace_level=0, inventory=None, actions=0):
         self.__hacker_name = hacker_name
         self.__rig = rig
-        self.__trace_level = trace_level  # list to be defined
+        self.__trace_level = trace_level
         self.__inventory = inventory if inventory is not None else [Asset("CryptoToken", "Used to acquire or repair rigs.", "Unencrypted", 1)] # default 1 CryptoToken at start
         self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
         rig_status = str(self.__rig) if self.__rig else "No rig assigned"
         self.inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
-        self.trace_description = self.get_trace_level_description()
-        output = f"Name: {self.__hacker_name}\nRig: {rig_status}\nTrace Level: {self.__trace_level}\nAssets:\n{self.inventory_list}"
+        trace_description = self.get_trace_level_description()
+        output = f"Name: {self.__hacker_name}\nRig: {rig_status}\nTrace Level: {trace_description}\nAssets:\n{self.inventory_list}"
 
         return output.strip()
 
@@ -38,18 +38,29 @@ class Hacker:
 
     def get_trace_level_description(self):
         levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]
-        return levels[min(self.__trace_level, len(levels)) - 1]
+        return levels[min(self.__trace_level, len(levels))]
 
     def launch_data_spike(self, target_rig):
-        spike = next((a for a in self.__inventory if a.name == "Data Spike"), None)
-        if not spike:
-            print("You do not have a Data Spike available.\n")
+        if not self.__rig:
+            print(f"No rig assigned to {self.__hacker_name}. Unable to launch Data Spike.\n")
             return
-        self.__inventory.remove(spike)
+
+        rig_inventory = self.__rig._Rig__rig_inventory    # accessing the rig inventory
+        spike = next((a for a in rig_inventory if a.name == "Data Spike"), None)
+        if not spike:
+            print(f"You do not have a Data Spike available.\n")
+            return
+
+        if spike.quantity > 1:
+            spike.quantity -= 1
+        else:
+            rig_inventory.remove(spike)
+
         target_rig.take_damage()
         self.__actions += 1
         self.__trace_level += 1
-        print(f"Data Spike launched. Trace level now: {self.get_trace_level_description()}")
+
+        print(f"Data Spike launched.\n")
 
     def scan_inventory (self):    # updated to include rig inventory
         output = []
@@ -72,8 +83,9 @@ class Hacker:
         return "\n".join(output)
 
     def trace_level(self):
+
         while self.__actions == 0:
-            self.__trace_level = "undetected"
+            self.__trace_level = 0
 
         if self.__actions == 1:
             self.__trace_level = "level 1 - yellow alert"
@@ -87,7 +99,7 @@ class Hacker:
         else:
             self.__trace_level = "detected"
 
-        return self.__trace_level
+        return self.get_trace_level()
 
     def perform_action(self, action_name):
         self.__actions += 1
@@ -151,52 +163,15 @@ class Hacker:
             self.__inventory.remove(upgrade)
         self.__rig.upgrade()
 
-# Create Hacker (no rig)
 
-hacker = Hacker("DragonFire", None, 0,  None)
+
+# test trace level changes
+rig = Rig("NsR10")
+hacker = Hacker("NightShadow", rig, 0, None)
+target_rig = Rig("TargetRig", 0, "Online", None)
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
+hacker.launch_data_spike(target_rig=target_rig)
+print(hacker.get_trace_level_description())
 print(hacker)
-
-# Acquire Rig
-hacker.acquire_rig()
-
-# Acquire Rig (already acquired)
-hacker.acquire_rig()
-
-# No Data Spike available
-hacker.launch_data_spike(target_rig=hacker)
-
-# No Hardware Patch available
-hacker.rig_upgrade()
-
-# Testing asset generation (single)
-hacker = Hacker("StarBlaze", None, 0,  None)
-hacker.acquire_rig()    # Acquire Rig
-rig = hacker.get_rig()
-
-rig.generate_asset(hacker)
-
-print(hacker.scan_inventory())
-
-# Testing rig capacity
-hacker = Hacker("StarBlaze", None, 0,  None)
-hacker.acquire_rig()    # Acquire Rig
-rig = hacker.get_rig()
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-
-print(hacker.scan_inventory())
-
-# Test upgrade rig
-hacker = Hacker("SupaNova", None, 0, None)
-print(hacker)
-
-hacker.acquire_rig()
-
-rig = hacker.get_rig()
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
-print(hacker.scan_inventory())
-rig.upgrade()

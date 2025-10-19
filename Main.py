@@ -67,3 +67,14 @@ def test_rig_upgrade():
     rig.upgrade()
     print(hacker)
     print(hacker.scan_inventory())
+
+def test_trace_level():
+    rig = Rig("NsR10")
+    hacker = Hacker("NightShadow", rig, 0, None)
+    target_rig = Rig("TargetRig", 0, "Online", None)
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    hacker.launch_data_spike(target_rig=target_rig)
+    print(hacker.get_trace_level_description())
+    print(hacker)
