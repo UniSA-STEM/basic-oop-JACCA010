@@ -206,7 +206,38 @@ class Hacker:
             self.__rig.repair()
 
         else:
-            rig.rig_repair(self)
+            self.__rig_repair(self)
             print(f"Rig has been repaired.\n")
 
+    def extract_assets(self, target_rig):
+        if not target_rig or  not hasattr(target_rig, "_Rig__rig_inventory"):
+            print(f"Target rig is invalid or inaccessible.")    # checks target rig for valid inventory list.
 
+        rig_inventory = target_rig._Rig__rig_inventory
+        if not rig_inventory:
+            print(f"Target rig  is empty.")
+            return
+
+        for asset in rig_inventory[:]:
+            if not asset.encrypted:
+                existing = next((a for a in self.__rig._Rig__rig_inventory if a.name == asset.name), None)
+                if existing:
+                    existing.quantity += asset.quantity
+                else:
+                    self.__rig._Rig__rig_inventory.append(asset)
+            rig_inventory.remove(asset)
+            print(f"Transfer of unencrypted assets complete.\n")
+
+# Test extract assets from target rig
+
+
+enemy_rig = Rig("Midnite")
+enemy_hacker = Hacker("RedRose", enemy_rig, 0, None)
+target_rig = Rig("DragonFire", 2, "Online", None)
+target_hacker = Hacker("BlueDragon", target_rig, 0, None)
+enemy_rig.generate_asset(enemy_hacker)
+enemy_rig.generate_asset(enemy_hacker)
+enemy_rig.generate_asset(enemy_hacker)
+enemy_hacker.launch_data_spike(target_rig=target_rig)
+print(target_hacker)
+enemy_hacker.extract_assets(target_rig)

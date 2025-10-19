@@ -148,6 +148,18 @@ def test_repair_rig():
     target_rig.repair()
     print(target_hacker)
 
+def test_extract()
+    enemy_rig = Rig("Midnite")
+    enemy_hacker = Hacker("RedRose", enemy_rig, 0, None)
+    target_rig = Rig("DragonFire", 2, "Online", None)
+    target_hacker = Hacker("BlueDragon", target_rig, 0, None)
+    enemy_rig.generate_asset(enemy_hacker)
+    enemy_rig.generate_asset(enemy_hacker)
+    enemy_rig.generate_asset(enemy_hacker)
+    enemy_hacker.launch_data_spike(target_rig=target_rig)
+    print(target_hacker)
+    enemy_hacker.extract_assets(target_rig)
+
 if __name__ == "__main__":
     test_hacker_create()
     test_acquire_rig()
@@ -163,3 +175,4 @@ if __name__ == "__main__":
     test_upgrade_high_trace()
     test_damage_rig()
     test_repair_rig()
+    test_extract()
