@@ -239,14 +239,3 @@ class Hacker:
         else:
             print(f"Asset '{asset_name}' not found in inventory.")    # if asset not found
 
-# test inventory search for assets
-
-hacker = Hacker("Brazen", None, 0 , None)
-hacker.acquire_rig()
-rig = hacker.get_rig()
-hacker.find_asset("Hardware Patch")
-rig.generate_asset(hacker)
-hacker.find_asset("CryptoToken")
-rig.generate_asset(hacker)
-hacker.find_asset("Removable Drive")
-hacker.find_asset("Data Spike")
