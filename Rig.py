@@ -81,15 +81,12 @@ class Rig:
         print(f"Asset '{asset_name}' not found in {self.__rig_name}.")
         return None
 
-    def random_asset(self):
-        name, description = random.choice(list(self.asset_list.items()))
-        return Asset(name, description, False, quantity=1)
-
     def generate_asset(self, hacker):
         rig_asset = {"Data Spike", "Removable Drive"}
         hacker_asset = {"CryptoToken","Hardware Patch"}
 
-        asset = self.random_asset()
+        name, description = random.choice(list(self.asset_list.items()))
+        asset = Asset(name, description, False, quantity=1)
 
         if asset.name in rig_asset:
             self.__rig_inventory.append(asset)
@@ -99,8 +96,10 @@ class Rig:
             hacker.store_asset(asset)
             print(f"Generated asset: {asset.name} ({asset.encrypted}) added to inventory.\n")
         else:
-            print(f"Generated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
             hacker.store_asset(asset)
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
+
+
 
 
 
