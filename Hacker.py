@@ -169,6 +169,8 @@ hacker.rig_upgrade()
 # Testing asset generation
 hacker = Hacker("StarBlaze", None, 0,  None)
 hacker.acquire_rig()    # Acquire Rig
+rig = hacker.get_rig()
 
-print("Inventory:")
+rig.generate_asset(hacker)
+
 print(hacker.scan_inventory())
