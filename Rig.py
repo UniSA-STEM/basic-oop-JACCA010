@@ -72,7 +72,7 @@ class Rig:
 
     def upgrade(self):
         self.__upgrade_level += 1
-        print(f"{self.__rig_name} upgraded to level {self.__upgrade_level}")
+        print(f"{self.__rig_name} upgraded to level {self.__upgrade_level}\n")
 
     def get_max_capacity(self):
         return 4 + (self.__upgrade_level)  # allows for default 3 items plus one additional before upgrade required

@@ -134,22 +134,22 @@ class Hacker:
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
 
-    def rig_upgrade(self, asset_name = "Hardware Patch", amount=1):    # adding rig upgrade to Hacker class
-        if not self.__rig:
-            print(f"No rig assigned to {self.__hacker_name}. Unable to upgrade.")
-            return
-        asset_name = next((a for a in self.__inventory if a.name == "Hardware Patch"), None)
-        if not asset_name or asset_name.quantity < amount:
-            print(f"Upgrade failed: Hardware Patch not available.\n")
-            return
-        # applying upgrade to rig
-
-        self.__rig.upgrade(asset_name)
-        self.retrieve_asset("Hardware Patch", 1)
-
     def get_rig(self):
         return self.__rig
 
+    def rig_upgrade(self):
+        if not self.__rig:
+            print(f"No rig assigned to {self.__hacker_name}. Unable to upgrade.")
+            return
+        upgrade = next((a for a in self.__inventory if a.name == "Hardware Patch"), None)
+        if not upgrade or upgrade.quantity < 1:
+            print(f"Upgrade failed: Hardware Patch not available.\n")
+            return
+
+        upgrade.quantity -= 1
+        if upgrade.quantity == 0:
+            self.__inventory.remove(upgrade)
+        self.__rig.upgrade()
 
 # Create Hacker (no rig)
 
@@ -186,3 +186,17 @@ rig.generate_asset(hacker)
 rig.generate_asset(hacker)
 
 print(hacker.scan_inventory())
+
+# Test upgrade rig
+hacker = Hacker("SupaNova", None, 0, None)
+print(hacker)
+
+hacker.acquire_rig()
+
+rig = hacker.get_rig()
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
+print(hacker.scan_inventory())
+rig.upgrade()

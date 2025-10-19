@@ -55,3 +55,15 @@ def test_multiple_asset_generation():
     rig.generate_asset(hacker)
     rig.generate_asset(hacker)
     print(hacker.scan_inventory())
+
+def test_rig_upgrade():
+    hacker = Hacker("SupaNova", None, 0, None)
+    hacker.acquire_rig()
+    rig = hacker.get_rig()
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    rig.upgrade()
+    print(hacker)
+    print(hacker.scan_inventory())
