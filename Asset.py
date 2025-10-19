@@ -10,7 +10,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 class Asset:
 
-    def __init__(self, name, description, encrypted=False, quantity=0):
+    def __init__(self, name, description, encrypted=False, quantity=1):
         self.__name = name
         self.__description = description
         self.__encrypted = encrypted
@@ -53,6 +53,6 @@ class Asset:
     name = property(get_name)
     description = property(get_description)
     encrypted = property(get_encrypted)
-    quantity = property(get_quantity)
+    quantity = property(get_quantity, set_quantity)
 
 

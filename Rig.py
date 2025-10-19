@@ -15,7 +15,7 @@ class Rig:
     asset_list = {
         "CryptoToken": "Used to acquire or repair rigs.",
         "Data Spike": "Used in battles.",
-        "Removable Drive": "Found in rigs and used for extraction.",
+        "Removeable Drive": "Found in rigs and used for extraction.",
         "Security Chip": "Used to encrypt or decrypt assets.",
         "Hardware Patch": "Used to upgrade rigs.",
     }
@@ -74,8 +74,13 @@ class Rig:
         self.__upgrade_level += 1
         print(f"{self.__rig_name} upgraded to level {self.__upgrade_level}")
 
-    def store_asset(self, asset):
-        self.__rig_inventory.append(asset)
+    def store_asset(self, new_asset):
+        for asset in self.__rig_inventory:
+            if asset.name == new_asset.name:
+                asset.quantity += new_asset.quantity
+                print(f"Updated '{asset.name}' quantity to {asset.quantity} in {self.__rig_inventory}.")
+                return
+        self.__rig_inventory.append(new_asset)
         print(f"Asset '{asset.name}' stored in {self.__rig_name}.")
 
     def release_asset(self, asset_name):
@@ -88,25 +93,23 @@ class Rig:
         return None
 
     def generate_asset(self, hacker):
-        rig_asset = {"Data Spike", "Removable Drive"}
+        rig_asset = {"Data Spike", "Removeable Drive"}
         hacker_asset = {"CryptoToken","Hardware Patch"}
 
         name, description = random.choice(list(self.asset_list.items()))
         asset = Asset(name, description, "Unencrypted", quantity=1)
-        asset.store_asset(rig_asset)
-        asset.store_asset(hacker_asset)
 
         if asset.name in rig_asset:
-            self.__rig_inventory.append(asset)
-            print(f"Generated asset: {asset.name} ({asset.encrypted}) added to inventory.\n")
+            self.store_asset(asset)
+            print(f"\nGenerated asset: {asset.name} ({asset.encrypted}) added to rig inventory.\n")
 
         elif asset.name in hacker_asset:
             hacker.store_asset(asset)
-            print(f"Generated asset: {asset.name} ({asset.encrypted}) added to inventory.\n")
+            print(f"\nGenerated asset: {asset.name} ({asset.encrypted}) added to hacker inventory.\n")
 
         else:
             hacker.store_asset(asset)
-            print(f"Generated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
+            print(f"\nGenerated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
 
 
 

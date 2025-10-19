@@ -104,13 +104,13 @@ class Hacker:
         else:
             print("Proceed at your own risk.")
 
-    def store_asset(self, asset_name):
-        asset = next((a for a in self.__inventory if a.name == asset_name), None)
-        if asset and self.__rig:
-            self.__rig.store_asset(asset)
-            self.__inventory.remove(asset)
-        else:
-            print(f"Rig upgrade required, cannot store asset '{asset_name}")
+    def store_asset(self, new_asset):
+        for asset in self.__inventory:
+            if asset.name == new_name:
+                asset.quantity += new_asset.quantity
+                print(f"Updated '{asset.name}' quantity to {asset.quantity} in {self.__inventory}.")
+            return
+        self.__inventory.append(new_asset)
 
     def retrieve_asset(self, asset_name):
         if self.__rig:
@@ -173,18 +173,6 @@ hacker = Hacker("StarBlaze", None, 0,  None)
 hacker.acquire_rig()    # Acquire Rig
 rig = hacker.get_rig()
 
-rig.generate_asset(hacker)
-
-print(hacker.scan_inventory())
-
-
-# Testing asset generation (multiple)
-hacker = Hacker("StarBlaze", None, 0,  None)
-hacker.acquire_rig()    # Acquire Rig
-rig = hacker.get_rig()
-
-rig.generate_asset(hacker)
-rig.generate_asset(hacker)
 rig.generate_asset(hacker)
 
 print(hacker.scan_inventory())
