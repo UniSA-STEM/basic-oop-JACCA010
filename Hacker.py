@@ -206,7 +206,7 @@ class Hacker:
             self.__rig.repair()
 
         else:
-            self.__rig_repair(self)
+            self.__rig.repair(self)
             print(f"Rig has been repaired.\n")
 
     def extract_assets(self, target_rig):
@@ -228,16 +228,25 @@ class Hacker:
             rig_inventory.remove(asset)
             print(f"Transfer of unencrypted assets complete.\n")
 
-# Test extract assets from target rig
+    def find_asset(self,asset_name):
+        asset = next((a for a in self.__inventory if a.name == asset_name), None)  # search hacker inventory
 
+        if not asset and self.__rig and hasattr(self.__rig, "_Rig__rig_inventory"):  # search rig inventory
+            asset = next((a for a in self.__rig._Rig__rig_inventory if a.name == asset_name), None)
 
-enemy_rig = Rig("Midnite")
-enemy_hacker = Hacker("RedRose", enemy_rig, 0, None)
-target_rig = Rig("DragonFire", 2, "Online", None)
-target_hacker = Hacker("BlueDragon", target_rig, 0, None)
-enemy_rig.generate_asset(enemy_hacker)
-enemy_rig.generate_asset(enemy_hacker)
-enemy_rig.generate_asset(enemy_hacker)
-enemy_hacker.launch_data_spike(target_rig=target_rig)
-print(target_hacker)
-enemy_hacker.extract_assets(target_rig)
+        if asset:
+            print(asset.display_asset())
+        else:
+            print(f"Asset '{asset_name}' not found in inventory.")    # if asset not found
+
+# test inventory search for assets
+
+hacker = Hacker("Brazen", None, 0 , None)
+hacker.acquire_rig()
+rig = hacker.get_rig()
+hacker.find_asset("Hardware Patch")
+rig.generate_asset(hacker)
+hacker.find_asset("CryptoToken")
+rig.generate_asset(hacker)
+hacker.find_asset("Removable Drive")
+hacker.find_asset("Data Spike")

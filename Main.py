@@ -148,7 +148,7 @@ def test_repair_rig():
     target_rig.repair()
     print(target_hacker)
 
-def test_extract()
+def test_extract():
     enemy_rig = Rig("Midnite")
     enemy_hacker = Hacker("RedRose", enemy_rig, 0, None)
     target_rig = Rig("DragonFire", 2, "Online", None)
@@ -159,6 +159,17 @@ def test_extract()
     enemy_hacker.launch_data_spike(target_rig=target_rig)
     print(target_hacker)
     enemy_hacker.extract_assets(target_rig)
+
+def test_inventory_search():
+    hacker = Hacker("Brazen", None, 0, None)
+    hacker.acquire_rig()
+    rig = hacker.get_rig()
+    hacker.find_asset("Hardware Patch")
+    rig.generate_asset(hacker)
+    hacker.find_asset("CryptoToken")
+    rig.generate_asset(hacker)
+    hacker.find_asset("Removable Drive")
+    hacker.find_asset("Data Spike")
 
 if __name__ == "__main__":
     test_hacker_create()
@@ -176,3 +187,4 @@ if __name__ == "__main__":
     test_damage_rig()
     test_repair_rig()
     test_extract()
+    test_inventory_search()

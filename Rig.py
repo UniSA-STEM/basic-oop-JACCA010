@@ -15,7 +15,7 @@ class Rig:
     asset_list = {
         "CryptoToken": "Used to acquire or repair rigs.",
         "Data Spike": "Used in battles.",
-        "Removeable Drive": "Found in rigs and used for extraction.",
+        "Removable Drive": "Found in rigs and used for extraction.",
         "Security Chip": "Used to encrypt or decrypt assets.",
         "Hardware Patch": "Used to upgrade rigs.",
     }
@@ -35,7 +35,7 @@ class Rig:
     def initial_assets(self):
         return [
             Asset("Data Spike", "Used in battles.", "Unencrypted", 2),
-            Asset("Removeable Drive", "Found in rigs and used for extraction.", "Unencrypted", 1),
+            Asset("Removable Drive", "Found in rigs and used for extraction.", "Unencrypted", 1),
         ]
 
     def get_rig_name(self):
@@ -102,7 +102,7 @@ class Rig:
         return None
 
     def generate_asset(self, hacker):
-        rig_asset = {"Data Spike", "Removeable Drive"}
+        rig_asset = {"Data Spike", "Removable Drive"}
         hacker_asset = {"CryptoToken","Hardware Patch"}
 
         name, description = random.choice(list(self.asset_list.items()))
