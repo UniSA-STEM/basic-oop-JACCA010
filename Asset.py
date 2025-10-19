@@ -29,6 +29,9 @@ class Asset:
     def get_encrypted(self):
         return self.__encrypted
 
+    def set_encrypted(self, encrypted):
+        return self.__encrypted
+
     def set_quantity(self, quantity):
         self.__quantity = quantity
 
@@ -53,7 +56,7 @@ class Asset:
     # properties to be added
     name = property(get_name)
     description = property(get_description)
-    encrypted = property(get_encrypted)
+    encrypted = property(get_encrypted, set_encrypted)
     quantity = property(get_quantity, set_quantity)
 
 

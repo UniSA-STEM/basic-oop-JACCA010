@@ -51,10 +51,14 @@ class Hacker:
             print(f"You do not have a Data Spike available.\n")
             return
 
-        if spike.quantity > 1:
-            spike.quantity -= 1
+        if self.__trace_level < 2:
+
+            if spike.quantity > 1:
+                spike.quantity -= 1
+            else:
+                rig_inventory.remove(spike)
         else:
-            rig_inventory.remove(spike)
+            print(f"You cannot perform that action until your trace level has reduced.\n")
 
         target_rig.take_damage()
         self.__actions += 1
@@ -82,24 +86,7 @@ class Hacker:
 
         return "\n".join(output)
 
-    def trace_level(self):
 
-        while self.__actions == 0:
-            self.__trace_level = 0
-
-        if self.__actions == 1:
-            self.__trace_level = "level 1 - yellow alert"
-
-        elif self.__actions == 2:
-            self.__trace_level = "level 2 - orange alert"
-
-        elif self.__actions == 3:
-            self.__trace_level = "level 3 - red alert"
-
-        else:
-            self.__trace_level = "detected"
-
-        return self.get_trace_level()
 
     def perform_action(self, action_name):
         self.__actions += 1
@@ -133,16 +120,56 @@ class Hacker:
             print("Asset not found in inventory.")
 
     def encrypt_asset(self, asset_name):
-        asset = next((a for a in self.__inventory if a.name == asset_name), None)
+        chip = next((a for a in self.__inventory if a.name == "Security Chip"), None)
+        if not chip:
+            print(f"You do not have a Security Chip available.\n")
+            return
+
+        if self.__trace_level < 3:
+
+            if chip.quantity > 1:
+                chip.quantity -= 1
+            else:
+                self.__inventory.remove(chip)
+        else:
+            print(f"You cannot perform that action until your trace level has reduced.\n")
+
+        asset = next((a for a in self.__inventory if a.name == asset_name), None)    # search hacker inventory
+
+        if not asset and self.__rig and hasattr(self.__rig, "_Rig__rig_inventory"):    #search rig inventory
+            asset = next((a for a in self.__rig._Rig__rig_inventory if a.name == asset_name), None)
+
         if asset:
-            asset.encrypt()
+            asset.encrypted = True
+            self.__actions += 1
+            self.__trace_level += 1
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
 
     def decrypt_asset(self, asset_name):
-        asset = next((a for a in self.__inventory if a.name == asset_name), None)
+        chip = next((a for a in self.__inventory if a.name == "Security Chip"), None)
+        if not chip:
+            print(f"You do not have a Security Chip available.\n")
+            return
+
+        if self.__trace_level < 3:
+
+            if chip.quantity > 1:
+                chip.quantity -= 1
+            else:
+                self.__inventory.remove(chip)
+        else:
+            print(f"You cannot perform that action until your trace level has reduced.\n")
+
+        asset = next((a for a in self.__inventory if a.name == asset_name), None)    # search hacker inventory
+
+        if not asset and self.__rig and hasattr(self.__rig, "_Rig__rig_inventory"):    #search rig inventory
+            asset = next((a for a in self.__rig._Rig__rig_inventory if a.name == asset_name), None)
+
         if asset:
-            asset.decrypt()
+            asset.encrypted = False
+            self.__actions += 1
+            self.__trace_level += 1
         else:
             print(f"Asset '{asset_name}' not found in inventory.")
 
@@ -165,13 +192,24 @@ class Hacker:
 
 
 
-# test trace level changes
-rig = Rig("NsR10")
-hacker = Hacker("NightShadow", rig, 0, None)
-target_rig = Rig("TargetRig", 0, "Online", None)
+# test asset encryption and decryption (higher trace level as base)
+
+hacker = Hacker("CraterMoon", None, 4, None)
+hacker.acquire_rig()
+rig = hacker.get_rig()
 rig.generate_asset(hacker)
 rig.generate_asset(hacker)
 rig.generate_asset(hacker)
-hacker.launch_data_spike(target_rig=target_rig)
-print(hacker.get_trace_level_description())
+print(hacker.scan_inventory())
+hacker.encrypt_asset("Data Spike")
+print(hacker.scan_inventory())
+hacker.rig_upgrade()
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
+print(hacker.scan_inventory())
+hacker.decrypt_asset("Hardware Patch")
 print(hacker)
+print(hacker.scan_inventory())
+
+
+
