@@ -191,8 +191,25 @@ class Hacker:
         else:
             print(f"You cannot perform that action until your trace level has reduced.\n")
 
+    def rig_repair(self):
+        if not self.__rig:
+            print(f"No rig assigned to {self.__hacker_name}. No rig to repair.")
+            return
+        repair = next((a for a in self.__inventory if a.name == "CryptoToken"), None)
+        if not repair or repair.quantity < 1:
+            print(f"Repair failed: CryptoToken not available.\n")
+            return
 
-# test damage rig
+        repair.quantity -= 1
+        if repair.quantity == 0:
+            self.__inventory.remove(repair)
+            self.__rig.repair()
+
+        else:
+            rig.rig_repair(self)
+            print(f"Rig has been repaired.\n")
+
+# test repair rig
 enemy_rig = Rig("Midnite")
 enemy_hacker = Hacker("RedRose", enemy_rig, 0, None)
 target_rig = Rig("DragonFire", 2, "Online", None)
@@ -202,4 +219,6 @@ enemy_rig.generate_asset(enemy_hacker)
 enemy_rig.generate_asset(enemy_hacker)
 enemy_hacker.launch_data_spike(target_rig=target_rig)
 print (target_hacker)
+target_rig.repair()
+print(target_hacker)
 
