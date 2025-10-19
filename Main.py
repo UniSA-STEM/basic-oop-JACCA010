@@ -46,6 +46,10 @@ def test_generate_asset():
     Rig.generate_asset(Hacker)
     print(hacker)
 
-
 if __name__ == '__Main__':
     test_hacker_create()
+    test_acquire_rig()
+    test_acquire_duplicate_rig()
+    test_no_data_spike()
+    test_no_hardware_patch()
+    test_generate_asset()
