@@ -24,13 +24,19 @@ class Rig:
         self.__rig_name = rig_name  #get hacker_name
         self.__damage = damage
         self.__rig_status = rig_status
-        self.__rig_inventory = rig_inventory if rig_inventory is not None else []
+        self.__rig_inventory = rig_inventory if rig_inventory is not None else self.initial_assets()
         self.__upgrade_level = upgrade_level  #default 0
         self.__max_damage = max_damage  #max_damage 2 before rig status = critical damage - rig offline
 
     def __str__(self):
         inventory_list = "\n  ".join(str(asset) for asset in self.__rig_inventory) or "Empty"
-        return f"Rig Name: {self.__rig_name}\nStatus: {self.__rig_status}\nDamage: {self.__damage}/{self.__max_damage}\nUpgrade Level: {self.__upgrade_level}\nInventory:\n{inventory_list}"
+        return (f"Rig Name: {self.__rig_name}\nStatus: {self.__rig_status}\nDamage: {self.__damage}/{self.__max_damage}\nUpgrade Level: {self.__upgrade_level}\n")
+
+    def initial_assets(self):
+        return [
+            Asset("Data Spike", "Used in battles.", "Unencrypted", 2),
+            Asset("Removeable Drive", "Found in rigs and used for extraction.", "Unencrypted", 1),
+        ]
 
     def get_rig_name(self):
         return self.__rig_name
@@ -86,7 +92,9 @@ class Rig:
         hacker_asset = {"CryptoToken","Hardware Patch"}
 
         name, description = random.choice(list(self.asset_list.items()))
-        asset = Asset(name, description, False, quantity=1)
+        asset = Asset(name, description, "Unencrypted", quantity=1)
+        asset.store_asset(rig_asset)
+        asset.store_asset(hacker_asset)
 
         if asset.name in rig_asset:
             self.__rig_inventory.append(asset)

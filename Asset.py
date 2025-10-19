@@ -44,16 +44,14 @@ class Asset:
             print(f"Insufficient {self.name} to retrieve.")
 
     def display_asset(self):
-        status = "Encrypted" if self.encrypted else "Unencrypted"
-        return f"{self.name} ({self.quantity}) — {self.description} [{status}]"
+        return f"{self.name} ({self.quantity}) — {self.description}"
 
-
-
-
+    def get_description(self):
+        return self.__description
 
     # properties to be added
     name = property(get_name)
-    description = property(description)
+    description = property(get_description)
     encrypted = property(get_encrypted)
     quantity = property(get_quantity)
 

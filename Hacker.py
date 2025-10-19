@@ -18,21 +18,23 @@ class Hacker:
         self.__actions = actions # number of actions taken (will affect trace level)
 
     def __str__(self):  # string method added
-        Rig.rig_status = str(self.__rig) if self.__rig else "No rig assigned"
+        rig_status = str(self.__rig) if self.__rig else "No rig assigned"
         self.inventory_list = "\n ".join(str(asset) for asset in self.__inventory) or "Empty"
         self.trace_description = self.get_trace_level_description()
-        output = f"Name: {self.__hacker_name}\nRig: {Rig.rig_status}\nTrace Level: {self.__trace_level}\nAssets: \n{self.inventory_list}"
+        output = f"Name: {self.__hacker_name}\nRig: {rig_status}\nTrace Level: {self.__trace_level}\nAssets:\n{self.inventory_list}"
 
         return output.strip()
 
     def acquire_rig(self):
         if self.__rig:
-           print(f"Rig acquisition failed: {self.__hacker_name} already has an active rig.\n{self.__rig}.\n")    # prevent duplication of rig
+           print(f"\nRig acquisition failed: {self.__hacker_name} already has an active rig.")
+           print(self.__rig)    # prevent duplication of rig
            return
         assigned_name = self.__hacker_name[:2] + "R" + str(len(self.__hacker_name))
         self.__rig = Rig(assigned_name)    # assigns rig to Hacker
         self.__inventory = [asset for asset in self.__inventory if asset.name != "CryptoToken"]
         print(f"Rig activated. Rig name '{assigned_name}' assigned.\n")
+        print(self.scan_inventory())
 
     def get_trace_level_description(self):
         levels = ["Undetected", "Level 1 - yellow alert", "Level 2 - amber alert", "Level 3 - red alert", "Compromised"]
@@ -61,11 +63,11 @@ class Hacker:
         if self.__rig and hasattr(self.__rig, "_Rig__rig_inventory"):
             rig_inventory = self.__rig._Rig__rig_inventory
             if rig_inventory:
-                output.extend([f" {asset.display_asset()}" for asset in rig_inventory])
+                output.extend([f"{asset.display_asset()}" for asset in rig_inventory])
             else:
                 output.append("Empty.\n")
         else:
-            output.append(" (No rig assigned)")
+            output.append("(No rig assigned)")
 
         return "\n".join(output)
 
@@ -166,11 +168,23 @@ hacker.launch_data_spike(target_rig=hacker)
 # No Hardware Patch available
 hacker.rig_upgrade()
 
-# Testing asset generation
+# Testing asset generation (single)
 hacker = Hacker("StarBlaze", None, 0,  None)
 hacker.acquire_rig()    # Acquire Rig
 rig = hacker.get_rig()
 
+rig.generate_asset(hacker)
+
+print(hacker.scan_inventory())
+
+
+# Testing asset generation (multiple)
+hacker = Hacker("StarBlaze", None, 0,  None)
+hacker.acquire_rig()    # Acquire Rig
+rig = hacker.get_rig()
+
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
 rig.generate_asset(hacker)
 
 print(hacker.scan_inventory())
