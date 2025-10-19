@@ -106,9 +106,9 @@ class Hacker:
 
     def store_asset(self, new_asset):
         for asset in self.__inventory:
-            if asset.name == new_name:
+            if asset.name == new_asset.name:
                 asset.quantity += new_asset.quantity
-                print(f"Updated '{asset.name}' quantity to {asset.quantity} in {self.__inventory}.")
+                print(f"Updated '{asset.name}' quantity to {asset.quantity} in hacker inventory.")
             return
         self.__inventory.append(new_asset)
 
@@ -173,6 +173,16 @@ hacker = Hacker("StarBlaze", None, 0,  None)
 hacker.acquire_rig()    # Acquire Rig
 rig = hacker.get_rig()
 
+rig.generate_asset(hacker)
+
+print(hacker.scan_inventory())
+
+# Testing rig capacity
+hacker = Hacker("StarBlaze", None, 0,  None)
+hacker.acquire_rig()    # Acquire Rig
+rig = hacker.get_rig()
+rig.generate_asset(hacker)
+rig.generate_asset(hacker)
 rig.generate_asset(hacker)
 
 print(hacker.scan_inventory())

@@ -17,7 +17,8 @@ class Asset:
         self.__quantity = quantity
 
     def __str__(self):    # managing inventory name, description, status and quantity
-        return f"{self.name} - {self.description}\nStatus: {self.encrypted}\nQuantity: {self.quantity}"
+        status = "[Encrypted]" if self.__encrypted else ""
+        return f"{self.name} - {self.description}\nStatus: {status}\nQuantity: {self.quantity}"
 
     def get_name(self):
         return self.__name

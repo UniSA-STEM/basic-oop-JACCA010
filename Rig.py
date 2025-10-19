@@ -74,12 +74,21 @@ class Rig:
         self.__upgrade_level += 1
         print(f"{self.__rig_name} upgraded to level {self.__upgrade_level}")
 
+    def get_max_capacity(self):
+        return 4 + (self.__upgrade_level)  # allows for default 3 items plus one additional before upgrade required
+
     def store_asset(self, new_asset):
+        total_quantity = sum(asset.quantity for asset in self.__rig_inventory)
+        if total_quantity + new_asset.quantity > self.get_max_capacity():
+            print(f"Rig capacity unavailable.  Rig upgrade required.\n")
+            return
+
         for asset in self.__rig_inventory:
             if asset.name == new_asset.name:
                 asset.quantity += new_asset.quantity
-                print(f"Updated '{asset.name}' quantity to {asset.quantity} in {self.__rig_inventory}.")
+                print(f"Updated '{asset.name}' quantity to {asset.quantity} in {self.__rig_name}.\n")
                 return
+
         self.__rig_inventory.append(new_asset)
         print(f"Asset '{asset.name}' stored in {self.__rig_name}.")
 
@@ -101,15 +110,15 @@ class Rig:
 
         if asset.name in rig_asset:
             self.store_asset(asset)
-            print(f"\nGenerated asset: {asset.name} ({asset.encrypted}) added to rig inventory.\n")
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) added to rig inventory.\n")
 
         elif asset.name in hacker_asset:
             hacker.store_asset(asset)
-            print(f"\nGenerated asset: {asset.name} ({asset.encrypted}) added to hacker inventory.\n")
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) added to hacker inventory.\n")
 
         else:
             hacker.store_asset(asset)
-            print(f"\nGenerated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
+            print(f"Generated asset: {asset.name} ({asset.encrypted}) - defaulting to hacker.\n")
 
 
 

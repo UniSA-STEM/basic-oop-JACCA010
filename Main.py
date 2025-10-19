@@ -40,6 +40,18 @@ def test_no_hardware_patch():
     hacker.rig_upgrade()
     print(hacker)
 
+def test_asset_generation():
+    hacker = Hacker("StarBlaze", None, 0,  None)
+    hacker.acquire_rig()    # Acquire Rig
+    rig = hacker.get_rig()
+    rig.generate_asset(hacker)
+    print(hacker.scan_inventory())
 
-
-
+def test_multiple_asset_generation():
+    hacker = Hacker("StarBlaze", None, 0,  None)
+    hacker.acquire_rig()    # Acquire Rig
+    rig = hacker.get_rig()
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    rig.generate_asset(hacker)
+    print(hacker.scan_inventory())
